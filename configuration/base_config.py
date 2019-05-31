@@ -31,7 +31,7 @@ class Preprocess:
 
 class Model:
     FACENET_DIR = '%s/models/model-20180227-062200.pb' % ROOT
-    COEFF_DIR = 'home/thuan/models/coefficient_resnet_v1.pb'
+    COEFF_DIR = '/home/thuan/models/coefficient_resnet_v1.pb'
     MTCNN_DIR = '/home/thuan/models/align'
     # GLASSES_DIR = '%s/models/model_SunGlasses_or_Not.pth' % ROOT
     GLASSES_DIR = '%s/models/resnet18_glasses_and_maskes_p4_finetuned_v3.pth' % ROOT
