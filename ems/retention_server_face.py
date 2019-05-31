@@ -9,7 +9,7 @@ from config import Config
 from core.cv_utils import create_if_not_exist, base64str_to_frame
 from ems import base_server
 from pipe import task
-from utils import database, dict_and_list, simple_request, utils
+from utils import utils
 from utils.logger import logger
 from utils.utils import get_class_attributes
 from worker import (face_detect_worker, face_extract_worker,
