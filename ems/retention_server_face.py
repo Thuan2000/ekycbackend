@@ -9,7 +9,7 @@ from config import Config
 from core.cv_utils import create_if_not_exist, base64str_to_frame
 from ems import base_server
 from pipe import task
-from utils import dict_and_list, simple_request, utils
+from utils import database, dict_and_list, simple_request, utils
 from utils.logger import logger
 from utils.utils import get_class_attributes
 from worker import (face_detect_worker, face_extract_worker,
@@ -75,7 +75,6 @@ class RetentionServer(base_server.AbstractServer):
         return rotated_mat
 
     def _get_max_coeff_from_faces(self, _task):
-        print('Is that here?')
         return max([t.quality for t in _task.depackage()['faces']])
 
     def run_face_tasks(self, _task):
@@ -92,8 +91,12 @@ class RetentionServer(base_server.AbstractServer):
             tmp_task = self.stageExtract.doFaceTask(tmp_task)
             if len(tmp_task.depackage()['faces']) > 0:
                 tasks.append(tmp_task)
-        print('Or is it below here?')
-        return max(tasks, key=self._get_max_coeff_from_faces)
+
+        if tasks:
+            return max(tasks, key=self._get_max_coeff_from_faces)
+
+        return tmp_task
+
 
     def __create_save_dir(self, _time=time.time()):
         save_dir = os.path.join(
@@ -165,10 +168,8 @@ class RetentionServer(base_server.AbstractServer):
 
         dist = np.linalg.norm(face_1 - face_2)
         if dist < 1.0:
-            print('YEs')
             return 'yes', 200, {'Content-Type':'text/plain'}
         else:
-            print('No')
             return 'no', 200, {'Content-Type':'text/plain'}
 
     def recognition(self, input_data, images, image_paths):
@@ -180,14 +181,18 @@ class RetentionServer(base_server.AbstractServer):
 
         tasks = []
         if len(images) > 2:
-            print('Got multiple faces')
             return 'multiple_faces', 200, {'Content-Type':'text/plain'}
         for image in images[:2]:
             _task = task.Task(task.Task.Frame)
             _task.package(frame=image,
                           frame_info=input_data['receiveTimestamp'])
-            # self.recognition_pipeline.put(_task)
-            _task = self.run_face_tasks(_task)
+            try:
+                # self.recognition_pipeline.put(_task)
+                _task = self.run_face_tasks(_task)
+            except Exception as e:
+                print(e)
+                return 'no_face', 200, {'Content-Type':'text/plain'}
+
             if _task:
                 print(_task.depackage())
             tasks.append(_task)
@@ -197,7 +202,6 @@ class RetentionServer(base_server.AbstractServer):
             return self.match(tasks[0], tasks[1])
         except Exception as e:
             print(e)
-            print('No face!')
             return 'no_face', 200, {'Content-Type':'text/plain'}
 
     def register_api(self):
