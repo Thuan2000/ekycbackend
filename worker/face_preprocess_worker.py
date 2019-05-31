@@ -32,6 +32,7 @@ class PreprocessDetectedArcFaceWorker():
 
     @process_traceback
     def doFaceTask(self, _task):
+        print('Do face task')
         # start = time.time()
         # TODO: Get timer
         data = _task.depackage()

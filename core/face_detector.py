@@ -86,6 +86,7 @@ class MTCNNDetector(object):
             print("MTCNN Model loaded")
 
     def detect_face(self, img, minsize=Config.MTCNN.MIN_FACE_SIZE):
+        print('Detecting face')
         '''
         Detect faces appear in img
         :param img: image to detect faces
