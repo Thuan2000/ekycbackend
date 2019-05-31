@@ -43,7 +43,7 @@ class Model:
     YOLO_DIR_MXNET = '%s/models/yolo3_darknet53_voc_0070_0.8997_topview_1702.params' % ROOT
     ANCHORS_DIR = '%s/models/yolo_anchors.txt' % ROOT
     COCO_CLASSES_DIR = '%s/models/coco_classes.txt' % ROOT
-    ARCFACE_DIR = 'home/thuan/models/model-r100-ii/model-0000.params'
+    ARCFACE_DIR = '/home/thuan/models/arcface/model-0000.params'
     MASAN_CUSTOMER_DIR = '%s/models/Model_masan_visitor_security.pth' % ROOT
     GENDER_AGE_DIR = '%s//models/gamodel-r50/model,0' % ROOT
     ANTISPOOFING_3DCNN_DIR = '%s/models/antispoofing-3dcnn-model.hdf5' % ROOT
