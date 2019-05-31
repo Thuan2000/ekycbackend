@@ -164,8 +164,10 @@ class RetentionServer(base_server.AbstractServer):
 
         dist = np.linalg.norm(face_1 - face_2)
         if dist < 1.0:
+            print('YEs')
             return 'yes', 200, {'Content-Type':'text/plain'}
         else:
+            print('No')
             return 'no', 200, {'Content-Type':'text/plain'}
 
     def recognition(self, input_data, images, image_paths):
@@ -177,6 +179,7 @@ class RetentionServer(base_server.AbstractServer):
 
         tasks = []
         if len(images) > 2:
+            print('Got multiple faces')
             return 'multiple_faces', 200, {'Content-Type':'text/plain'}
         for image in images[:2]:
             _task = task.Task(task.Task.Frame)
@@ -193,6 +196,7 @@ class RetentionServer(base_server.AbstractServer):
             return self.match(tasks[0], tasks[1])
         except Exception as e:
             print(e)
+            print('No face!')
             return 'no_face', 200, {'Content-Type':'text/plain'}
 
     def register_api(self):
