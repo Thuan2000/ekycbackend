@@ -75,6 +75,7 @@ class RetentionServer(base_server.AbstractServer):
         return rotated_mat
 
     def _get_max_coeff_from_faces(self, _task):
+        print('Is that here?')
         return max([t.quality for t in _task.depackage()['faces']])
 
     def run_face_tasks(self, _task):
@@ -91,7 +92,7 @@ class RetentionServer(base_server.AbstractServer):
             tmp_task = self.stageExtract.doFaceTask(tmp_task)
             if len(tmp_task.depackage()['faces']) > 0:
                 tasks.append(tmp_task)
-
+        print('Or is it below here?')
         return max(tasks, key=self._get_max_coeff_from_faces)
 
     def __create_save_dir(self, _time=time.time()):

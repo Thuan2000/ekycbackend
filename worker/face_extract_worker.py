@@ -34,6 +34,7 @@ class MultiArcFacesExtractWorker():
 
     @process_traceback
     def doFaceTask(self, _task):
+        print('Do extract task')
         # detect all at once, no cuda memory may occur
         data = _task.depackage()
         faces, preprocessed_images, preprocessed_coeff_images, frame, frame_info = data['faces'], data[
